@@ -43,8 +43,25 @@ class GameBoard {
         return this.grid[pos].classList.contains(object);
     }
 
-    rotateGrid(pos, deg) {
+    rotateDiv(pos, deg) {
         this.grid[pos].style.transform = `rotate(${deg}deg)`;
+    }
+
+    moveCharacter(character) {
+        if (character.shouldMove()) {
+            const { nextMovePos, direction } = character.getNextMove(
+                this.objectExist
+            );
+            const { classeToRemove, classesToAdd } = character.makeMove();
+            if (character.rotation && nextMovePos !== character.pos) {
+                this.rotateDiv(nextMovePos, character.dir.rotation);
+                this.rotateDiv(character.pos, 0);
+            }
+            this.removeObject(character.pos, classeToRemove);
+            this.addObject(nextMovePos, classesToAdd);
+
+            character.setNewPos(nextMovePos, direction);
+        }
     }
 
     static createGameBoard(DOMGrid, level) {

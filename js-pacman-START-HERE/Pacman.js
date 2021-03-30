@@ -20,8 +20,8 @@ class Pacman {
         this.timer++;
     }
 
-    nextMove(objectExist) {
-        let nextMovePos = this.posthis.dir.movement
+    getNextMove(objectExist) {
+        let nextMovePos = this.pos + this.dir.movement;
 
         if (
             objectExist(nextMovePos, OBJECT_TYPE.WALL) ||
@@ -54,7 +54,9 @@ class Pacman {
         }
 
         const nextMovePos = this.pos + dir.movement;
-        if (objectExist(nextMovePos, OBJECT_TYPE.WALL)) return;
+        if (
+            objectExist(nextMovePos, OBJECT_TYPE.WALL) ||
+            objectExist(nextMovePos, OBJECT_TYPE.GHOSTLAIR)) return;
         this.dir = dir;
     }
 }
