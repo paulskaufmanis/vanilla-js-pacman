@@ -15,18 +15,20 @@ class GameBoard {
     }
 
     createGrid(level) {
-        this.count = 0;
+        this.dotCount = 0;
         this.grid = [];
         this.DOMGrid.innerHTML = '';
-        this.DOMGrid.style.cssText = `grid-template-columns: repeat(${GRID_SIZE}, ${CELL_SIZE}px)`
+        // First set correct amount of columns based on Grid Size and Cell Size
+        this.DOMGrid.style.cssText = `grid-template-columns: repeat(${GRID_SIZE}, ${CELL_SIZE}px);`;
 
-        level.forEach((square, i) => {
+        level.forEach((square) => {
             const div = document.createElement('div');
             div.classList.add('square', CLASS_LIST[square]);
-            div.style.cssText = `width: ${CELL_SIZE}px; height: ${CELL_SIZE}px`;
+            div.style.cssText = `width: ${CELL_SIZE}px; height: ${CELL_SIZE}px;`;
             this.DOMGrid.appendChild(div);
             this.grid.push(div);
 
+            // Add dots
             if (CLASS_LIST[square] === OBJECT_TYPE.DOT) this.dotCount++;
         });
     }
@@ -36,7 +38,7 @@ class GameBoard {
     }
 
     removeObject(pos, classes) {
-        this.grid[pos].classList.remove(...classes)
+        this.grid[pos].classList.remove(...classes);
     }
 
     objectExist = (pos, object) => {
